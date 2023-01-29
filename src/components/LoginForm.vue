@@ -27,12 +27,14 @@ import {useVuelidate} from "@vuelidate/core";
 import axios from "axios";
 import {email, required} from "@vuelidate/validators";
 import {validPassword} from "@/components/RegisterForm";
+import {useToast} from "vue-toastification";
 
 const backend = 'http://localhost:3000/api/v1';
 
 export default {
   setup () {
-    return { v$: useVuelidate() }
+    const toast = useToast();
+    return { toast, v$: useVuelidate() }
   },
   name: "LoginForm",
   data: function () {

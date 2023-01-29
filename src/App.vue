@@ -2,9 +2,10 @@
   <img id="logo" src='./assets/logo.png'  width="150"/>
   <nav style="display: inline-block">
     <router-link to="/"><img src=""/>Home</router-link> |
+    <router-link to="/shop" v-if="isLoggedInProp">Shop</router-link><span v-if="isLoggedInProp"> | </span>
     <router-link to="/about">About</router-link> |
     <router-link to="/contact">Contact</router-link> |
-    <router-link to="/register" v-if="!isLoggedInProp">Register</router-link><span v-if="!isLoggedInProp"> | </span>
+    <router-link to="/register" v-if="!isLoggedInProp">Register</router-link>
     <router-link to="/login" v-if="!isLoggedInProp">Login</router-link>
     <router-link to="/" id="logout" @click="logout" v-if="isLoggedInProp">Sing out</router-link>
   </nav>
