@@ -57,6 +57,7 @@ export default {
           .then((res) => {
             document.cookie = 'jwtToken=' + res.data.jwtToken;
             this.$store.commit("changeIsLoggedIn", true);
+            sessionStorage.setItem('isAdmin', res.data.isAdmin)
             this.$router.push('/');
             return true;
           })
