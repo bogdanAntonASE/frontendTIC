@@ -5,11 +5,15 @@ import Vuex from "vuex";
 export default new Vuex.Store({
     state: {
         isLoggedIn: false,
+        isAdmin: false,
         shoppingCart: []
     },
     getters: {
         getIsLoggedIn (state) {
             return state.isLoggedIn;
+        },
+        getIsAdmin (state) {
+            return state.isAdmin;
         },
         getShoppingCart (state) {
             return state.shoppingCart;
@@ -30,6 +34,9 @@ export default new Vuex.Store({
             } else {
                 state.shoppingCart.push(value)
             }
+        },
+        changeIsAdmin(state, value) {
+            state.isAdmin = value
         }
     },
     actions: {}

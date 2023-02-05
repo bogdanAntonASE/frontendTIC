@@ -9,6 +9,7 @@
     </router-link><span v-if="isLoggedInProp"> | </span>
     <router-link to="/about">About</router-link> |
     <router-link to="/contact">Contact</router-link> |
+    <router-link to="/admin" v-if="isLoggedInProp && isAdmin">Administration</router-link><span v-if="isLoggedInProp && isAdmin"> | </span>
     <router-link to="/register" v-if="!isLoggedInProp">Register</router-link><span v-if="!isLoggedInProp"> | </span>
     <router-link to="/login" v-if="!isLoggedInProp">Login</router-link>
     <router-link to="/" id="logout" @click="logout" v-if="isLoggedInProp">Sing out</router-link>
@@ -37,7 +38,7 @@ export default {
       document.cookie = 'jwtToken' +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
       sessionStorage.clear();
       localStorage.clear();
-      location.reload();
+      this.$router.push('/');
       this.$store.commit('changeIsLoggedIn', false)
     }
   },
@@ -52,6 +53,14 @@ export default {
       },
       set(value) {
         this.$store.commit('changeIsLoggedIn', value)
+      }
+    },
+    isAdmin: {
+      get() {
+        return this.$store.state.isAdmin
+      },
+      set(value) {
+        this.$store.commit('changeIsAdmin', value)
       }
     }
   }

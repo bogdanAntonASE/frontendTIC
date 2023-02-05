@@ -57,12 +57,13 @@ export default {
           .then((res) => {
             document.cookie = 'jwtToken=' + res.data.jwtToken;
             this.$store.commit("changeIsLoggedIn", true);
+            this.$store.commit("changeIsAdmin", res.data.isAdmin)
             sessionStorage.setItem('isAdmin', res.data.isAdmin)
             this.$router.push('/');
             return true;
           })
           .catch(() => {
-            return false;
+            useToast().error('User is disabled...')
           });
     }
   },

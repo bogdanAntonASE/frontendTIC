@@ -141,8 +141,6 @@ export default {
           }).catch(() => {
             toast.error('Car addition process failed. Changes were not saved.')
           })
-
-      toast.success("Cars bought!");
     }
 
     const deleteItem = (item) => {

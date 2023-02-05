@@ -1,12 +1,17 @@
 <template>
-  <div>
-
-  </div>
+  <Suspense>
+    <AdminTable/>
+  </Suspense>
 </template>
 
 <script>
+import AdminTable from "@/components/AdminTable.vue";
+
 export default {
-  name: "AdminView"
+  name: "AdminView",
+  components: {
+    AdminTable
+  }
 }
 </script>
 
