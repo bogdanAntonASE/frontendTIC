@@ -2,6 +2,9 @@
   <div v-if="isUsers" >
     <EasyDataTable
         class="my-table"
+        table-class-name="customize-table"
+        rows-per-page-message="Users per page:"
+        rows-per-page="10"
         :theme-color="themeColor"
         :headers="headersUsers"
         :items="itemsUsers"
@@ -31,25 +34,39 @@
   <div v-if="!isUsers">
     <EasyDataTable
         class="my-table"
+        table-class-name="customize-table"
+        rows-per-page-message="Acquisitions per page:"
+        rows-per-page="10"
         :theme-color="themeColor"
         :headers="headersAcquisitions"
         :items="itemsAcquisitions"
-        :loading="loadingAcquisitions"/>
+        :loading="loadingAcquisitions">
+      <template #expand="item">
+        <div style="padding: 15px; white-space: pre-line">
+          {{ item.cars }}
+        </div>
+      </template>
+    </EasyDataTable>
   </div>
+  <button type="button" v-if="isAdmin && isUsers" @click="switchIsUser" class="btn btn-danger" style="margin-top: 2%; width: 150px">Display Acquisitions</button>
+  <button type="button" v-if="isAdmin && !isUsers" @click="switchIsUser" class="btn btn-danger" style="margin-top: 2%; width: 150px">Display Users</button>
 </template>
 
 <script>
 import {ref} from "vue";
 import axios from "axios";
 import {useToast} from "vue-toastification";
+import {useStore} from "vuex";
 
 export default {
   name: "AdminTable",
   async setup() {
     const backend = 'http://localhost:3000/api/v1';
     const isAdmin = ref(false);
+    const store = useStore()
 
     isAdmin.value = sessionStorage.getItem('isAdmin') === 'true';
+    store.commit('changeIsAdmin', isAdmin.value)
     const toast = useToast();
 
     const themeColor = "#b9424c";
@@ -71,13 +88,8 @@ export default {
     const headersAcquisitions = [
       { text: "Full Name", value: "fullname", sortable: true },
       { text: "Email", value: "email", sortable: true },
-      { text: "Brand", value: "brand"},
-      { text: "Model Name", value: "modelName"},
-      { text: "Manufacturing Year", value: "manufacturingYear"},
-      { text: "Quantity", value: "quantity"},
-      { text: "Total Price", value: "totalPrice"},
-      { text: "Country", value: "country", sortable: true },
-      { text: "Operations", value: "operation"}
+      { text: "Total Price (€)", value: "totalPrice"},
+      { text: "Acquisition Date", value: "date", sortable: true}
     ];
 
     function getCookie(name) {
@@ -96,7 +108,7 @@ export default {
       loadingUsers.value = true
       await axios.get(backend + '/users', config)
           .then((res) => {
-            itemsUsers.value = itemsUsers.value.concat(res.data.message)
+            itemsUsers.value = res.data.message
             console.log(res.data)
           }).catch((err) => {
             console.log(err);
@@ -104,6 +116,39 @@ export default {
       setTimeout(() => loadingUsers.value = false, 1000)
     }
     await getUsers();
+
+    const getAcquisitions = async () => {
+      loadingAcquisitions.value = true
+      await axios.get(backend + '/acquisitions', config)
+          .then((res) => {
+            const answer = res.data.message
+            for (let acquisition of answer) {
+              let carsString = '';
+              console.log(acquisition);
+              for (let car of acquisition.cars) {
+                carsString += car.brand + " "
+                    + car.modelName + ", "
+                    + "Year: " + car.manufacturingYear + ", "
+                    + "Model: " + car.modelName + ", "
+                    + "Price: " + car.price + "€, "
+                    + "Quantity: " + car.quantity + "\n\n";
+              }
+              const innerAcquisition = {
+                fullname: acquisition.fullname,
+                email: acquisition.email,
+                totalPrice: acquisition.price,
+                date: acquisition.date,
+                cars: carsString
+              }
+              console.log(innerAcquisition);
+              itemsAcquisitions.value = itemsAcquisitions.value.concat(innerAcquisition);
+            }
+          }).catch((err) => {
+            console.log(err)
+          })
+
+      setTimeout(() => loadingAcquisitions.value = false, 1000);
+    }
 
     let itemsAcquisitions = ref([]);
 
@@ -152,6 +197,15 @@ export default {
       loadingUsers.value = false;
     }
 
+    const switchIsUser = async () => {
+      isUsers.value = !isUsers.value
+      if (isUsers.value) {
+        await getUsers();
+      } else {
+        await getAcquisitions();
+      }
+    }
+
     return {
       headersUsers,
       headersAcquisitions,
@@ -162,6 +216,7 @@ export default {
       loadingUsers,
       loadingAcquisitions,
       isAdmin,
+      switchIsUser,
       disableUser,
       makeAdmin
     }
@@ -186,5 +241,10 @@ export default {
 .operation-icon:hover {
   filter: invert(38%) sepia(19%) saturate(2693%) hue-rotate(312deg) brightness(85%) contrast(90%);
   transition: 0.3s ease-out;
+}
+
+.customize-table {
+  --easy-table-body-row-hover-background-color: rgba(240,128,128);
+  --easy-table-header-background-color: rgba(185, 66, 76, 0.91);
 }
 </style>

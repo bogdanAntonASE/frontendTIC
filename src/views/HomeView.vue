@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <img src="../assets/logo.png">
+    <h3>Welcome to our Dealership!</h3>
+    <img style="margin-top: -50px" src="../assets/logo.png">
   </div>
 </template>
 

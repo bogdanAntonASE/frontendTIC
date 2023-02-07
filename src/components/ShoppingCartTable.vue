@@ -4,7 +4,7 @@
         id="myTable"
         show-index
         table-class-name="customize-table"
-        hide-footer="false"
+        rows-per-page-message="Cars per page:"
         :theme-color="themeColor"
         :headers="headers"
         :items="items"

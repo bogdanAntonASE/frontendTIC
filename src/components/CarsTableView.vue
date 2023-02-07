@@ -11,7 +11,7 @@
         :headers="headers"
         :items="items"
         :loading="loading"
-        rows-per-page-message="cars per page:"
+        rows-per-page-message="Cars per page:"
         rows-per-page="10">
       <template #item-operation="item">
         <div class="operation-wrapper">
@@ -163,7 +163,6 @@ export default {
             && (items.value[i].hp === parseInt(car.hp))
             && (items.value[i].manufacturingYear === parseInt(car.manufacturingYear))
             && (items.value[i].price === parseFloat(car.price))) {
-          console.log(car)
           return i;
         }
       }
@@ -438,6 +437,8 @@ export default {
     const themeColor = "#b9424c";
 
     isAdmin.value = sessionStorage.getItem('isAdmin') === 'true';
+    store.commit('changeIsAdmin', isAdmin.value)
+    console.log(isAdmin.value)
 
     const addCar = () => {
       isAdding.value = true;
@@ -447,7 +448,7 @@ export default {
       newAddedItem.engineCapacity = 0;
       newAddedItem.hp = 0;
       newAddedItem.manufacturingYear = 0;
-      newAddedItem.quantity = 0;
+      newAddedItem.quantity = 1;
       newAddedItem.price = 0;
     }
 

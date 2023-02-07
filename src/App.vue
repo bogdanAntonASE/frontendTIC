@@ -1,7 +1,7 @@
 <template>
-  <img id="logo" src='./assets/logo.png'  width="150"/>
-  <nav style="display: inline-block">
-    <router-link to="/"><img src=""/>Home</router-link> |
+  <nav style="display: inline-block; margin-top: -25px">
+    <router-link to="/"><img id="logo" src='./assets/logo.png'  width="150"/></router-link>
+    <router-link to="/">Home</router-link> |
     <router-link to="/shop" v-if="isLoggedInProp">Shop</router-link><span v-if="isLoggedInProp"> | </span>
     <router-link to="/shopping-cart" v-if="isLoggedInProp">
       Cart
@@ -12,9 +12,13 @@
     <router-link to="/admin" v-if="isLoggedInProp && isAdmin">Administration</router-link><span v-if="isLoggedInProp && isAdmin"> | </span>
     <router-link to="/register" v-if="!isLoggedInProp">Register</router-link><span v-if="!isLoggedInProp"> | </span>
     <router-link to="/login" v-if="!isLoggedInProp">Login</router-link>
-    <router-link to="/" id="logout" @click="logout" v-if="isLoggedInProp">Sing out</router-link>
+    <router-link to="/logout" id="logout" @click="logout" v-if="isLoggedInProp">Sing out</router-link>
   </nav>
   <router-view/>
+
+  <div style="position: absolute; bottom: 0; left: 0">
+    ® Car Dealership
+  </div>
 </template>
 
 <script>
@@ -96,9 +100,5 @@ nav a.router-link-exact-active {
 #logo {
   left: 0;
   top: 0;
-}
-
-#logout {
-  color: #2c3e50;
 }
 </style>
