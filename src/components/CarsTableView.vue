@@ -208,7 +208,6 @@ export default {
               loading.value = false
             }, 1000)
           }).catch(err => {
-            console.log(err)
             toast.error(err.response.data.message)
             setTimeout(() => {
               window.location.href = '/';
@@ -237,12 +236,10 @@ export default {
 
 
         await axios.delete(backend + '/cars', configLocal)
-            .then(res => {
-              console.log(res)
+            .then(() => {
               toast.success('Successfully removed quantity for item!')
             }).catch(err => {
-              console.log(err)
-              toast.success('Failed to remove one quantity for item!')
+              toast.error(err.response.data.message)
             })
         items.value[index].quantity--;
       } else {
@@ -252,8 +249,7 @@ export default {
         }
 
         await axios.delete(backend + '/cars', configLocal)
-            .then(res => {
-              console.log(res)
+            .then(() => {
               items.value = items.value.filter((item) => {
                 return (item.brand !== val.brand)
                     || (item.modelName !== val.modelName)
@@ -262,8 +258,7 @@ export default {
                     || (item.manufacturingYear !== val.manufacturingYear)
               });
               toast.success('Successfully removed item!')
-            }).catch(err => {
-              console.log(err)
+            }).catch(() => {
               toast.error('Failed to remove item!')
             })
       }
@@ -430,15 +425,12 @@ export default {
         sessionStorage.setItem('shoppingCart', JSON.stringify(store.state.shoppingCart))
         toast.success('Car added in the shopping cart.')
       }
-
-      console.log(store.state.shoppingCart)
     }
 
     const themeColor = "#b9424c";
 
     isAdmin.value = sessionStorage.getItem('isAdmin') === 'true';
     store.commit('changeIsAdmin', isAdmin.value)
-    console.log(isAdmin.value)
 
     const addCar = () => {
       isAdding.value = true;
@@ -455,8 +447,6 @@ export default {
     const submitAddCar = async () => {
       isAdding.value = false
       loading.value = true;
-
-      console.log('here?')
 
       await axios.post(backend + '/cars', {
         newItem: newAddedItem

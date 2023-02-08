@@ -21,7 +21,7 @@
       </template>
     </EasyDataTable>
 
-    <button type="button" @click="buyCars" class="btn btn-danger" style="margin-top: 2%; width: 100px">Buy</button>
+    <button type="button" @click="buyCars" :disabled="isDisabled" class="btn btn-danger" style="margin-top: 2%; width: 100px">Buy</button>
   </div>
 </template>
 
@@ -37,7 +37,9 @@ export default {
     const store = useStore()
     const toast = useToast();
 
-    console.log(store.state.shoppingCart);
+    const isAdmin = ref(false);
+    isAdmin.value = sessionStorage.getItem('isAdmin') === 'true';
+    store.commit('changeIsAdmin', isAdmin.value)
 
     const checkIfItemExists = (car) => {
       if (items.value.length === 0) {
@@ -58,6 +60,7 @@ export default {
     }
 
     const loading = ref(true);
+    const isDisabled = ref(true);
     let items = ref([]);
 
     const headers = [
@@ -113,6 +116,7 @@ export default {
             items.value.push(car)
           }
         }
+        isDisabled.value = false
       } else {
         toast.error('Cart empty or not able to retrieve the shopping cart items.')
       }
@@ -131,16 +135,19 @@ export default {
     }
 
     const buyCars = async () => {
+      loading.value = true;
       await axios.post(backend + '/cart', {
         cars: items.value
       }, config)
           .then(async () => {
             toast.success('Successfully purchased cars!')
             items.value = [];
+            store.commit("changeShoppingCart", items.value);
             sessionStorage.setItem('shoppingCart', []);
           }).catch(() => {
             toast.error('Car addition process failed. Changes were not saved.')
           })
+      loading.value = false;
     }
 
     const deleteItem = (item) => {
@@ -171,7 +178,10 @@ export default {
       })
       sessionStorage.setItem('shoppingCart', JSON.stringify(items.value))
       store.commit("changeShoppingCart", items.value);
-      console.log(store.state.shoppingCart);
+
+      if (items.value.length === 0) {
+        isDisabled.value = true
+      }
     }
 
     return {
@@ -179,6 +189,7 @@ export default {
       themeColor,
       loading,
       items,
+      isDisabled,
       buyCars,
       deleteItem
     }

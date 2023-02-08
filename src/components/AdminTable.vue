@@ -109,9 +109,8 @@ export default {
       await axios.get(backend + '/users', config)
           .then((res) => {
             itemsUsers.value = res.data.message
-            console.log(res.data)
           }).catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           })
       setTimeout(() => loadingUsers.value = false, 1000)
     }
@@ -124,7 +123,6 @@ export default {
             const answer = res.data.message
             for (let acquisition of answer) {
               let carsString = '';
-              console.log(acquisition);
               for (let car of acquisition.cars) {
                 carsString += car.brand + " "
                     + car.modelName + ", "
@@ -140,11 +138,10 @@ export default {
                 date: acquisition.date,
                 cars: carsString
               }
-              console.log(innerAcquisition);
               itemsAcquisitions.value = itemsAcquisitions.value.concat(innerAcquisition);
             }
           }).catch((err) => {
-            console.log(err)
+            toast.error(err.response.data.message)
           })
 
       setTimeout(() => loadingAcquisitions.value = false, 1000);
@@ -160,7 +157,6 @@ export default {
       }, config)
           .then(async () => {
 
-            console.log('here')
             if (wasDisabled) {
               toast.success('User has been successfully enabled');
             } else {
@@ -170,8 +166,7 @@ export default {
             await getUsers();
           })
           .catch((err) => {
-
-            console.log(err)
+            toast.error(err.response.data.message)
           })
       loadingUsers.value = false
     }

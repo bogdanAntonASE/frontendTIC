@@ -47,7 +47,6 @@ export default {
   },
   methods: {
     submit() {
-      console.log('here')
       let payload = {
         email: this.form.email,
         password: this.form.password,
@@ -62,8 +61,8 @@ export default {
             this.$router.push('/');
             return true;
           })
-          .catch(() => {
-            useToast().error('User is disabled...')
+          .catch((err) => {
+            useToast().error(err.response.data.message)
           });
     }
   },

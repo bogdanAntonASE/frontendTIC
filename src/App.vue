@@ -1,7 +1,6 @@
 <template>
   <nav style="display: inline-block; margin-top: -25px">
-    <router-link to="/"><img id="logo" src='./assets/logo.png'  width="150"/></router-link>
-    <router-link to="/">Home</router-link> |
+    <router-link to="/"><img id="logo" src='./assets/logo.png' style="width: 150px; display: inline-block; height: auto"/>Home</router-link> |
     <router-link to="/shop" v-if="isLoggedInProp">Shop</router-link><span v-if="isLoggedInProp"> | </span>
     <router-link to="/shopping-cart" v-if="isLoggedInProp">
       Cart
@@ -22,7 +21,17 @@
 </template>
 
 <script>
+import {useStore} from "vuex";
+import {ref} from "vue";
+
 export default {
+  setup() {
+    const store = useStore()
+    const isAdmin = ref(false);
+
+    isAdmin.value = sessionStorage.getItem('isAdmin') === 'true';
+    store.commit('changeIsAdmin', isAdmin.value)
+  },
   data: function () {
     const jwtToken = this.getCookie('jwtToken');
     if (jwtToken) {
@@ -48,7 +57,6 @@ export default {
   },
   mounted() {
     this.isLoggedIn = this.$store.state.isLoggedIn;
-    console.log();
   },
   computed: {
     isLoggedInProp: {
