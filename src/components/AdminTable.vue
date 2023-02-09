@@ -61,7 +61,7 @@ import {useStore} from "vuex";
 export default {
   name: "AdminTable",
   async setup() {
-    const backend = 'http://localhost:3000/api/v1';
+    const backend = 'https://tic-project.onrender.com/api/v1';
     const isAdmin = ref(false);
     const store = useStore()
 

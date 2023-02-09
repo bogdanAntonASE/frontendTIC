@@ -126,7 +126,7 @@ export default {
 
     const themeColor = "#b9424c";
 
-    const backend = 'http://localhost:3000/api/v1';
+    const backend = 'https://tic-project.onrender.com/api/v1';
 
     const config = {
       headers: {

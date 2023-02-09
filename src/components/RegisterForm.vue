@@ -55,7 +55,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
 import axios from "axios";
 
-const backend = 'http://localhost:3000/api/v1'
+const backend = 'https://tic-project.onrender.com/api/v1'
 
 export function validName(name) {
   let validNamePattern = new RegExp('^[a-zA-Z -]{3,}$');

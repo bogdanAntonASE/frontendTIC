@@ -29,7 +29,7 @@ import {email, required} from "@vuelidate/validators";
 import {validPassword} from "@/components/RegisterForm";
 import {useToast} from "vue-toastification";
 
-const backend = 'http://localhost:3000/api/v1';
+const backend = 'https://tic-project.onrender.com/api/v1';
 
 export default {
   setup () {

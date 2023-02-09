@@ -114,7 +114,7 @@ import {ref, reactive} from "vue";
 import {useToast} from "vue-toastification";
 import {useStore} from "vuex";
 
-const backend = 'http://localhost:3000/api/v1';
+const backend = 'https://tic-project.onrender.com/api/v1';
 
 function getCookie(name) {
   const value = `; ${document.cookie}`;
