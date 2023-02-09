@@ -40,7 +40,7 @@
   <div class="container-fluid h-100" v-if="isEditing" id="editForm">
     <h3>Edit Car</h3>
     <div class="row h-100">
-      <div class="col-md-12 h-100 d-flex justify-content-center align-items-md-baseline">
+      <div class="col-md-12 h-75 d-flex justify-content-center align-items-md-baseline">
 
         <div class="col-md-5 edit rounded px-5 py-4 shadow bg-white text-left">
           <div class="edit-item col-12 form-group">
@@ -75,7 +75,7 @@
   <div class="container-fluid h-100" v-if="isAdding" id="addForm">
     <h3>Add Car</h3>
     <div class="row h-100">
-      <div class="col-md-12 h-100 d-flex justify-content-center align-items-md-baseline">
+      <div class="col-md-12 h-75 d-flex justify-content-center align-items-md-baseline">
 
         <div class="col-md-5 edit rounded px-5 py-4 shadow bg-white text-left">
           <div class="edit-item col-12 form-group">

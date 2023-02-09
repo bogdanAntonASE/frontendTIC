@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid h-100" id="login-form">
     <div class="row h-100">
-      <div class="col-md-12 h-100 d-flex justify-content-center align-items-md-baseline">
+      <div class="col-md-12 h-50 d-flex justify-content-center align-items-md-baseline">
 
         <div class="col-md-5 register rounded px-5 py-4 shadow bg-white text-left">
           <h1 class="text-center py-2"><b>Sign In</b></h1>

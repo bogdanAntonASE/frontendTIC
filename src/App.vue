@@ -1,6 +1,6 @@
 <template>
-  <nav style="display: inline-block; margin-top: -25px">
-    <router-link to="/"><img id="logo" src='./assets/logo.png' style="width: 150px; display: inline-block; height: auto"/>Home</router-link> |
+  <nav style="display: inline-block; margin-top: 0vh">
+    <router-link to="/"><img id="logo" src='./assets/logo.png' style="width: 15vh; display: inline-block; height: auto"/>Home</router-link> |
     <router-link to="/shop" v-if="isLoggedInProp">Shop</router-link><span v-if="isLoggedInProp"> | </span>
     <router-link to="/shopping-cart" v-if="isLoggedInProp">
       Cart
@@ -15,7 +15,7 @@
   </nav>
   <router-view/>
 
-  <div style="position: absolute; bottom: 0; left: 0">
+  <div style="position: absolute; top: 0; left: 0">
     ® Car Dealership
   </div>
 </template>
